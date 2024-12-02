@@ -22,7 +22,7 @@ def checkNumberOfGE3(lst):
     return numOfGE3
 
 def isSafe(original_lst, diff_lst):
-    # total number of problems (if greater than one, then the problem dampener cannot solve it)
+    # total number of problems
     numOfProbs = checkNumberOfDups(original_lst) + checkNumberOfChanges(diff_lst) + checkNumberOfGE3(diff_lst)
     print(numOfProbs)
 
