@@ -4,7 +4,6 @@ safeLines = 0
 def checkNumberOfDups(lst):
     # check number of duplicates (use original array)
     numOfDups = len(lst) - len(set(lst))
-    print("Dups: ", numOfDups)
     return numOfDups
 
 def checkNumberOfChanges(lst):
@@ -12,20 +11,16 @@ def checkNumberOfChanges(lst):
     numOfNeg = sum(1 for x in lst if x < 0)
     numOfPos = sum(1 for x in lst if x > 0)
     numOfChanges = min(numOfNeg, numOfPos)
-    print("Sign changes: ", numOfChanges)
     return numOfChanges
 
 def checkNumberOfGE3(lst):
     # check for diffs greater than 3
     numOfGE3 = sum(1 for x in lst if abs(x) > 3)
-    print("GE3: ", numOfGE3)
     return numOfGE3
 
 def isSafe(original_lst, diff_lst):
     # total number of problems
     numOfProbs = checkNumberOfDups(original_lst) + checkNumberOfChanges(diff_lst) + checkNumberOfGE3(diff_lst)
-    print(numOfProbs)
-
     return numOfProbs <= 0
 
 # open input file and start processing
@@ -33,7 +28,6 @@ with open('input_sample.txt', 'r') as file:
     lines = file.readlines()
     for line in lines:
         temp = list(map(int, line.split()))
-        print(temp)
 
         tempdiff = []
         for x,y in zip(temp, temp[1:]):
