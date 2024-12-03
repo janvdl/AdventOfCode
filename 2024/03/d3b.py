@@ -5,7 +5,6 @@ total = 0
 with open('input_b.txt', 'r') as file:
     lines = file.readlines()
     line = ''.join(lines).replace('\n', '')
-    print(lines)
 
     # regex to remove everything between don't() and do()
     do_matches = re.findall(r'don\'t\(\).+?do\(\)?', line)
@@ -15,7 +14,6 @@ with open('input_b.txt', 'r') as file:
     # regex to extract the mul() statement
     mul_matches = re.findall(r'mul\((\d+),(\d+)\)', line)
     for match in mul_matches:
-        print(match)
         total += (int(match[0]) * int(match[1]))
 
 print(total)
