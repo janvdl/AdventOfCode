@@ -6,10 +6,9 @@ def checkForXmas(s):
     count = (s.count("XMAS") + s.count("SAMX"))
     if count > 0:
         total += count
-        print("Found", count, "instances of XMAS for a total of", total)
 
 # read input data and create array of chars
-with open('input_a.txt', 'r') as file:
+with open('input_bigboy.txt', 'r') as file:
     lines = file.readlines()
     for line in lines:
         xmas_array.append(list(line.replace("\n", "")))
