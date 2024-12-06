@@ -6,8 +6,10 @@ os.system('cls' if os.name == 'nt' else 'clear')
 
 # state of board, if the guard exits, set halt = True
 halted = False
+cycle = False
 
 # grid
+grid_map_pure = []
 grid_map = []
 grid_min_x = 0
 grid_min_y = 0
@@ -17,6 +19,7 @@ grid_max_y = 0
 def print_grid():
     for i in range(len(grid_map)):
         print(grid_map[i])
+    print("==========")
 
 # define directions
 class direction(Enum): 
@@ -26,6 +29,8 @@ class direction(Enum):
     right = [ 0, 1 ]
 
 # guard
+guard_start_x = 0
+guard_start_y = 0
 guard_pos_x = 0
 guard_pos_y = 0
 guard_direction = direction.up
@@ -36,6 +41,7 @@ guard_char = "^"
 # for every 3 blockers add a 4th obstacle to create a rectangular cycle
 blockers_recorded = []
 turnpoints_recorded = []
+points_travelled = []
 
 # turn the guard
 def guard_turn():
@@ -73,9 +79,20 @@ def guard_move():
     global guard_pos_x
     global guard_pos_y
     global halted
+    global cycle
 
     next_block = guard_peek()
+    guard_pos = [guard_pos_x, guard_pos_y, guard_direction]
 
+    # check for cycles
+    if guard_pos in points_travelled:
+        # we have a cycle
+        halted = True
+        cycle = True
+    else:
+        points_travelled.append(guard_pos)
+
+    # do the moving bullshit
     if next_block == "#":
         blocker = [guard_pos_x + guard_direction.value[0], guard_pos_y + guard_direction.value[1]]
         blockers_recorded.append(blocker)
@@ -107,74 +124,86 @@ def count_guard_tracks():
 
     return total
 
+def reset_guard():
+    global guard_pos_x
+    global guard_pos_y
+    global guard_char
+    global guard_direction
+    global points_travelled
+    global halted
+    global cycle
+    global grid_map
+    global grid_map_pure
+
+    guard_pos_x = guard_start_x
+    guard_pos_y = guard_start_y
+    guard_char = "^"
+    points_travelled.clear()
+    halted = False
+    cycle = False
+    guard_direction = direction.up
+    grid_map = grid_map_pure.copy()
+
 # ==========================================
 # read input data and parse
-with open('input_sample.txt', 'r') as file:
+with open('input_a.txt', 'r') as file:
     lines = file.readlines()
+    print(lines)
     
     # set an iterator to find the guard
     currline_index = -1
-
-    # set constraints
-    grid_max_x = len(lines) - 1
-    grid_max_y = len(lines[0]) - 1
 
     for line in lines:
         currline_index += 1
         temp_line = line.replace("\n", "")
 
         if "^" in temp_line:
-            guard_pos_x = currline_index
-            guard_pos_y = temp_line.index("^")
-            print("Found guard at", guard_pos_x, ",", guard_pos_y)
+            guard_start_x = currline_index
+            guard_start_y = temp_line.index("^")
 
         grid_map.append(temp_line)
+
+    # set constraints
+    grid_max_x = len(grid_map[0]) - 1
+    grid_max_y = len(grid_map) - 1
+
+    grid_map_pure = grid_map.copy()
+    reset_guard()
 
 # start the guard simulation
 print_grid()
 while not halted:
     print("Guard is at position ", guard_pos_x, ",", guard_pos_y)
     guard_move()
-    print_grid()
+    #print_grid()
 
 # guard halted, count number of tracks
 print("Track count: ", count_guard_tracks())
 
-# go through all blockers and create rectangles
-print(turnpoints_recorded)
-print(blockers_recorded)
-additional_blockers = []
-for x, y, z in zip(turnpoints_recorded, turnpoints_recorded[1:], turnpoints_recorded[2:]):
-    w = [x[0] - y[0] + z[0], x[1] - y[1] + z[1]] # get the position that the turn needs to happen
-    last_direction = z[2] # add the last direction to determine position of obstacle
-    w[0] = w[0] + last_direction.value[0]
-    w[1] = w[1] + last_direction.value[1]
-    #print(w, x[:2], y[:2], z[:2])
+# find where extra obstacles will create loops
+print("========== Now trying to obstacle placement to create cycles")
+potential_obstacles = []
+points_travelled_copy = points_travelled.copy() # this will get overwritten as the guard passes through
+while len(points_travelled_copy) > 0:
+    print("Points to go for evaluating obstacles: ", len(points_travelled_copy))
+    # for each point travelled, check if we can induce a cycle by placing an obstacle in the path
+    # my logic is: for any point on the path travelled, if we can turn right and find one of our
+    #              previous points going in the same direction (without blockers in between) 
+    p = points_travelled_copy.pop()
 
-    # our new blocker (w), might not be hit if there is already an existing blocker before it
-    # discard it if that is the case
-    last_turnpoint = [z[0], z[1]]
-    print("=== Suggested blocker is", w)
-    add_blocker = True
-    #print("Check if an existing blocker is between", last_turnpoint, "and", w)
-    if last_turnpoint[0] == w[0]:
-        # same row, move along y-axis
-        x = w[0]
-        for y in range(min(last_turnpoint[1], w[1]), max(last_turnpoint[1], w[1])):
-            if [x, y] in blockers_recorded:
-                print("Found existing blocker at", x, y)
-                add_blocker = False
-                break
+    # reset the guard and place a blocker from the last position on the map, working backwards
+    reset_guard()
+    guard_mark(p[0], p[1], "#")
+    while not halted:
+        guard_move()
+        #print_grid()
+        #input()
+    
+    if cycle:
+        obstacle_point = [p[0], p[1]]
+        if obstacle_point not in potential_obstacles:
+            potential_obstacles.append(obstacle_point)
+        print("!! Cycle found by placing obstacle at ", obstacle_point)
     else:
-        # same column, move along x-axis
-        y = w[1]
-        for x in range(min(last_turnpoint[0], w[0]), max(last_turnpoint[0], w[0])):
-            if [x, y] in blockers_recorded:
-                print("Found existing blocker at", x, y)
-                add_blocker = False
-                break
-
-    if w not in additional_blockers and w not in blockers_recorded and add_blocker:
-        additional_blockers.append(w)
-print(additional_blockers)
-print("Potential additional blockers to induce cycles: ", len(additional_blockers))
+        continue
+print(len(potential_obstacles))
