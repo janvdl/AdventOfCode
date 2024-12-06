@@ -4,7 +4,7 @@ import os
 # clear terminal
 os.system('cls' if os.name == 'nt' else 'clear')
 
-# state of board, if the guard exits, set halt = True
+# state of board, if the guard exits or a cycle is found, set halt = True
 halted = False
 cycle = False
 
@@ -36,11 +36,7 @@ guard_pos_y = 0
 guard_direction = direction.up
 guard_char = "^"
 
-# record all blockers to determine where to put obstacles for cycles
-# record position of existing blockers, as well as direction turned into
-# for every 3 blockers add a 4th obstacle to create a rectangular cycle
-blockers_recorded = []
-turnpoints_recorded = []
+# record all paths travelled - this way we can work backwards and place obstacles
 points_travelled = []
 
 # turn the guard
@@ -94,12 +90,7 @@ def guard_move():
 
     # do the moving bullshit
     if next_block == "#":
-        blocker = [guard_pos_x + guard_direction.value[0], guard_pos_y + guard_direction.value[1]]
-        blockers_recorded.append(blocker)
         guard_turn()
-        turnpoint = [guard_pos_x, guard_pos_y]
-        turnpoint.append(guard_direction) # record the new direction for the blocker
-        turnpoints_recorded.append(turnpoint)
     elif next_block == "." or next_block == "X":
         # moving is allowed, mark current pos with X
         guard_mark(guard_pos_x, guard_pos_y, "X")
@@ -146,7 +137,7 @@ def reset_guard():
 
 # ==========================================
 # read input data and parse
-with open('input_a.txt', 'r') as file:
+with open('input_sample.txt', 'r') as file:
     lines = file.readlines()
     print(lines)
     
@@ -177,10 +168,10 @@ while not halted:
     guard_move()
     #print_grid()
 
-# guard halted, count number of tracks
+# Part A - guard halted, count number of tracks
 print("Track count: ", count_guard_tracks())
 
-# find where extra obstacles will create loops
+# Part B - find where extra obstacles will create loops
 print("========== Now trying to obstacle placement to create cycles")
 potential_obstacles = []
 points_travelled_copy = points_travelled.copy() # this will get overwritten as the guard passes through
@@ -196,8 +187,6 @@ while len(points_travelled_copy) > 0:
     guard_mark(p[0], p[1], "#")
     while not halted:
         guard_move()
-        #print_grid()
-        #input()
     
     if cycle:
         obstacle_point = [p[0], p[1]]
