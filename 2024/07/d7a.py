@@ -26,7 +26,7 @@ def recurseOp(ans, currval, nums):
         num = nums.pop()
         addition = currval + num
         multiplication = currval * num
-        print("ans = ", ans, ", currval = ", currval, ", num = ", num, ", addition = ", addition, ", multiplication = ", multiplication, ", nums = ", nums)
+        #print("ans = ", ans, ", currval = ", currval, ", num = ", num, ", addition = ", addition, ", multiplication = ", multiplication, ", nums = ", nums)
 
         if len(nums) == 0 and (ans == addition or ans == multiplication):
             return True
@@ -35,7 +35,7 @@ def recurseOp(ans, currval, nums):
     else:
         return False
 
-
+# shove each calibration line into recurseOp() 
 def solve(cal_line):
     ans = cal_line[0]
     first_num = cal_line[1]
@@ -45,6 +45,7 @@ def solve(cal_line):
     ansIsPossible = recurseOp(ans, first_num, nums)
     return ansIsPossible
 
+# add up all the lines that can be solved with the operators provided
 total = 0
 for cal_line in cal_lines:
     if solve(cal_line):

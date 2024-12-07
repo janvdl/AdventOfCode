@@ -18,7 +18,7 @@ with open('input_b.txt', 'r') as file:
             cal_line.append(int(num))
         cal_lines.append(cal_line)
 
-# try all combinations of + and *, eval from left to right, no op precedence
+# recursion to try all combinations of +, *, and ||, eval from left to right, no op precedence
 def recurseOp(ans, currval, nums):
     if currval > ans:
         return False
@@ -36,7 +36,7 @@ def recurseOp(ans, currval, nums):
     else:
         return False
 
-
+# shove each calibration line into recurseOp() 
 def solve(cal_line):
     ans = cal_line[0]
     first_num = cal_line[1]
@@ -47,6 +47,7 @@ def solve(cal_line):
     print(ans, ansIsPossible)
     return ansIsPossible
 
+# add up all the lines that can be solved with the operators provided
 total = 0
 for cal_line in cal_lines:
     if solve(cal_line):
