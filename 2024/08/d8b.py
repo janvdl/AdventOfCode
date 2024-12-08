@@ -48,7 +48,7 @@ for node in nodes:
 
                 # figure out how many additional antinodes can roughly fit on this map
                 # some of these will be outside of the map grid, discard those later when counting unique locations
-                maxloops = int(max(grid_max_x / x_dist, grid_max_y / y_dist)) + 1
+                maxloops = int(min(grid_max_x / x_dist, grid_max_y / y_dist)) + 1
 
                 for k in range(maxloops):
                     antinode1 = [node1[0] - (x_dist * k), node1[1] - (y_dist * k) if node1_left else node1[1] + (y_dist * k)]
