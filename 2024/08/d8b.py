@@ -26,7 +26,6 @@ for line in lines:
                 nodes[curr_char] = []
                 antinodes[curr_char] = [] # while we're here, initialise the antinodes dict as well
             nodes[curr_char].append([i, j])
-print(nodes)
 
 # function to check if a coord is within grid range
 def isCoordValid(coord):
@@ -57,9 +56,6 @@ for node in nodes:
 
                     antinodes[node].append(antinode1)
                     antinodes[node].append(antinode2)
-
-                print(node, node1, node2, x_dist, y_dist, node1_left, antinode1, antinode2)
-print(antinodes)
 
 # check all antinodes and count only the ones within the map constraints
 unique_locations = []
