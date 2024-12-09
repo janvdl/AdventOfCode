@@ -1,5 +1,4 @@
 import os
-from itertools import repeat
 
 # clear terminal
 os.system('cls' if os.name == 'nt' else 'clear')
@@ -20,7 +19,7 @@ for idx, item in enumerate(data):
         for _ in range(int(item)):
             disk[idx].append('.')
 
-# compress the data by moving .'s to the end and moving data from the end into their place
+# compress the data by moving blocks of .'s to the end and moving data from the end into their place
 l = len(disk)
 j = l - 1
 for k in range(j, 0, -1):
