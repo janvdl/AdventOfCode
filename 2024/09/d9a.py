@@ -1,5 +1,4 @@
 import os
-from itertools import repeat
 
 # clear terminal
 os.system('cls' if os.name == 'nt' else 'clear')
@@ -9,7 +8,6 @@ data  = open('input_a.txt', 'r').read().strip()
 disk = []
 
 # expand both the disk entries and the free space
-fileindex = 0
 for idx, item in enumerate(data):
     for _ in range(int(item)):
         if idx % 2 == 0:
