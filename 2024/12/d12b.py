@@ -12,9 +12,6 @@ regions = defaultdict(list)
 grid_max_x = 0
 grid_max_y = 0
 
-# visited marker
-marker = ' '
-
 # import data
 map  = [list(line.strip()) for line in open('input_a.txt', 'r').readlines()]
 grid_max_x = len(map) - 1
