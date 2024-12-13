@@ -21,7 +21,7 @@ def extractDigits(line):
 # Py = a(Ay) + b(By)    .... (2)
 #
 # Isolate a in (1)
-# a = (Px - b(Bx)) / Ax
+# a = (Px - (b * Bx)) / Ax
 # Then substitute a in (2) and isolate b
 # b = ((Ax * Py) - (Ay * Px)) / ((By * Ax) - (Bx * Ay))
 
