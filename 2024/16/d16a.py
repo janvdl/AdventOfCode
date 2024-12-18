@@ -98,7 +98,11 @@ def dijkstra(G, S, E):
             if dist[u_] < max_dist:
                 max_dist = dist[u_]
                 u = u_
-        Q.remove(u)
+                
+        if u is not None:        
+            Q.remove(u)
+        else:
+            return dist, prev
 
         for v in G[u]:
             if v in Q:
