@@ -118,6 +118,7 @@ def dijkstra(G, S, E):
         
 
 dist, prev = dijkstra(G, S, E)
+print(dist[E])
 
 seq = []
 u = E
