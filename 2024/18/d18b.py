@@ -128,8 +128,6 @@ def binary_search(S, E, points, corrupted_points, start, end):
         print("Deadly corrupted byte occurs between", middle, 'and', end)
         return binary_search(S, E, points, corrupted_points, middle, end)
 
-# find the terminal point and get the coordinate
-
+# find the terminal point and get the coordinates
 terminal_point = binary_search(S, E, points, corrupted_points, start_, end_)
 print(corrupted_points[terminal_point])
-    

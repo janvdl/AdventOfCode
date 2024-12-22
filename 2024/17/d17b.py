@@ -84,5 +84,40 @@ def run_machine(registers, tape):
 
     return output
 
-output = run_machine(registers, tape)
-print(output)
+output = []
+n = 1 # keep track of how many bitwise shifts we've done
+found = False
+    # work it backwards
+    # the A register currently in the program is the result of bitwise shifting right by 3 and modulo
+    # so shift left by 3, then fine tune by incrementing by 1
+    # until the last digit of the output == the last digit of the tape
+    # then bitwise shift by 3...., etc. until the entire tape and output matches
+
+while not found:
+    subset_tape = list(reversed(tape))[:n]
+    registers_ = registers.copy()
+    output = run_machine(registers_, tape)
+    subset_output = list(reversed(output))[:n]
+
+    #print('A: \t\t', registers['A'])
+    #print('Subset tape: \t', subset_tape)
+    #print('Subset output: \t', subset_output)
+
+    if len(subset_output) < len(subset_tape):
+        registers['A'] = registers['A'] << 3
+        continue
+
+    if subset_output[-1] < subset_tape[-1]:
+        registers['A'] += 1
+    elif subset_output[-1] > subset_tape[-1]:
+        registers['A'] -= 1
+    else:
+        # equal last digits
+        print('A: \t\t', registers['A'])
+        print('Subset tape: \t', subset_tape)
+        print('Subset output: \t', subset_output)
+        n += 1
+        if len(subset_tape) == len(tape):
+            found = True
+
+print(registers['A'])
