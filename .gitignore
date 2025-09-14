@@ -181,7 +181,7 @@ cython_debug/
 .cursorindexingignore
 
 # Ignore .txt files to avoid committing input data, copyrighted by Eric Wastl
-*/*.txt
+**/*.txt
 
 # Mac stuff
 .DS_Store
