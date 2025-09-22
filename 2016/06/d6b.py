@@ -25,7 +25,7 @@ for line in columns.values():
     for c in line:
         cc[c] += 1
 
-    # most frequent char
+    # least frequent char
     fc = min(cc, key=cc.get)
 
     # add to message
