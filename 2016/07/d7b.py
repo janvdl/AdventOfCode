@@ -43,21 +43,18 @@ def check_ssl(input):
             
             # make sure they are each others inverse, i.e., xyx and yxy
             if i_ord[0] == o_ord[1] and i_ord[1] == o_ord[0]:
-                print(i, ':', o)
                 supports_ssl = True
                 break
         
         if supports_ssl:
-            break # no need to loop if we have ssl support
+            break # no need to keep looping if we have ssl support
 
     return supports_ssl
 
 # process lines
 valid_ssl = 0
 for line in lines:
-    if check_ssl(line):
-        print(line)
-        valid_ssl += 1
+    valid_ssl += 1 if check_ssl(line) else 0
 
 # final count
 print('SSL supporting addresses:', valid_ssl)
