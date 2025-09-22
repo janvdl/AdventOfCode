@@ -6,7 +6,6 @@ def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 clear()
 
-
 def my_md5(input):
     return hashlib.md5(input.encode()).hexdigest()
 
