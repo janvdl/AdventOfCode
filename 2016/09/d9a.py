@@ -8,7 +8,6 @@ clear()
 # read input
 output = ''
 line = open('2016/09/input.txt', 'r').readline().strip()
-#line = 'X(8x2)(3x3)ABCY'
 
 marker_open = False
 marker_x = False
