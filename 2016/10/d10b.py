@@ -1,0 +1,1 @@
+# d10a.py solves both the parts A and B of this puzzle
