@@ -31,16 +31,9 @@ g = {}
 q = []
 q.append(b)
 
-done_floors = []
 while len(q) > 0:
     print(len(q), '\r', end='')
     b = q.pop(0)
-
-    # keep track of floors we're done with
-    if len(b[0]) == 0:
-        done_floors = [0]
-    elif len(b[0]) == 0 and len(b[1]) == 0:
-        done_floors = [0, 1]
 
     # get the json dump as node key and add to g
     j = json.dumps(b)
@@ -57,7 +50,7 @@ while len(q) > 0:
             cc = new_nodes(b[f])
 
             fns = []
-            if f != 0 and (f - 1) not in done_floors: fns.append(f - 1)
+            if f != 0: fns.append(f - 1)
             if f != 3: fns.append(f + 1)
 
             for fn in fns:
