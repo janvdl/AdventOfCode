@@ -13,18 +13,18 @@ dial = 50
 zeroes = 0
 
 for l in lines:
-    direction = -1 if l[0] == 'L' else 1
+    direction = l[0]
     clicks = int(l[1:])
+    prev = dial
 
-    # click dial to the left or right
-    dial += clicks * direction
-
-    # check for overflow
-    if dial < 0 or dial >= 100:
-        dial = dial % 100
-    
-    # if zero then increment for password counter
-    if dial == 0:
-        zeroes += 1
+    for c in range(clicks):
+        dial += 1 if direction == 'R' else -1
+        if dial == 0 or dial == 100:
+            zeroes += 1
+            dial = 0
+        elif dial == -1:
+            dial = 99
+        elif dial == 101:
+            dial = 1
 
 print(zeroes)
