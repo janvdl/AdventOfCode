@@ -25,7 +25,7 @@ def no_repeats(s):
         for i in range(0, len(s), chunk_size):
             chunks.append(s[i:i + chunk_size])
 
-        if all(s == chunks[0] for s in chunks):
+        if all(c == chunks[0] for c in chunks):
             valid = False
             break
 
