@@ -17,7 +17,6 @@ for l in open('2025/05/input.txt', 'r').readlines():
 ranges.sort(key=lambda x:x[0])
 
 i = 0
-l = len(ranges)
 while (i < len(ranges) - 1):
     r0 = ranges.pop(i)
     r1 = ranges.pop(i)
