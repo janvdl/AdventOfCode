@@ -13,7 +13,6 @@ lines = [l.strip() for l in open('2025/07/input.txt', 'r').readlines()]
 s_r, s_c = 0, lines[0].find("S")
 
 # keep track of beams and splits
-splits = 0
 beam_cols = defaultdict(int)
 beam_cols[s_c] = 1
 
@@ -23,8 +22,6 @@ for l in lines[1:]:
     tmp_beam_cols = beam_cols.copy()
     for b in tmp_beam_cols:
         if b in split_idxs and beam_cols[b] > 0:
-            splits += 1
-
             # every beam arrives in its path based on the previous splitter
             # like a sort of Pascal's triangle
             # in the case of a split setup like:
