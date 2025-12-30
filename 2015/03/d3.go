@@ -76,6 +76,7 @@ func part_b(data []byte) int {
 	// keep track of current position
 	var sx, sy, rx, ry int = 0, 0, 0, 0
 
+	// keep track of santa vs robo-santa
 	var is_santa bool = true
 
 	// evaluate all lines and increment counts per coord
