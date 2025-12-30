@@ -16,18 +16,17 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	line := string(data)
 
 	// part A
-	a := part_a(line)
+	a := part_a(data)
 	fmt.Println("Part A:", a)
 
 	// part B
-	b := part_b(line)
+	b := part_b(data)
 	fmt.Println("Part B:", b)
 }
 
-func part_a(line string) int {
+func part_a(data []byte) int {
 	// dictionary to keep track of points
 	var houses = make(map[coord]int)
 	houses[coord{x: 0, y: 0}] = 1
@@ -36,7 +35,7 @@ func part_a(line string) int {
 	var x, y int = 0, 0
 
 	// evaluate all lines and increment counts per coord
-	for _, c := range line {
+	for _, c := range data {
 		switch c {
 		case '^':
 			y--
@@ -69,7 +68,7 @@ func part_a(line string) int {
 	return result_a
 }
 
-func part_b(line string) int {
+func part_b(data []byte) int {
 	// dictionary to keep track of points
 	var houses = make(map[coord]int)
 	houses[coord{x: 0, y: 0}] = 1
@@ -80,7 +79,7 @@ func part_b(line string) int {
 	var is_santa bool = true
 
 	// evaluate all lines and increment counts per coord
-	for _, c := range line {
+	for _, c := range data {
 		switch c {
 		case '^':
 			if is_santa {
