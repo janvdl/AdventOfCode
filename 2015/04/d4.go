@@ -10,7 +10,7 @@ import (
 
 func main() {
 	// input data
-	data := "your_input_here"
+	data := "bgvyzdsv"
 
 	// Part A
 	part_a_result := solver(data, 0, "00000")
