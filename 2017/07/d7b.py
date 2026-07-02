@@ -76,14 +76,6 @@ for n in nodes:
         root = n
         break
 
-#def printTree(node, depth):
-#    tabs = "----" * depth
-#    print(tabs, node.namestr, node.getTotalValue())
-#
-#    for child in node.getChildren():
-#        printTree(child, depth + 1)
-#printTree(root, 0)
-
 def findUnbalancedNode(root):
     children = root.getChildren()
     values = []
