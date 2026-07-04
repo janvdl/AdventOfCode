@@ -7,9 +7,12 @@ def clear():
 
 # registers
 cpu = defaultdict(int)
+cpu["__max"] = 0
 
 def update_register(cpu, register, operation, value):
     cpu[register] += value if operation == 'inc' else (value * -1)
+    if cpu[register] > cpu["__max"]:
+        cpu["__max"] = cpu[register]
 
 # read nodes
 lines = [l.strip().split() for l in open('2017/08/input.txt', 'r').readlines()]
@@ -47,9 +50,4 @@ for l in lines:
     
     print(cpu)
 
-max_register = 0
-for register in cpu:
-    if cpu[register] > max_register:
-        max_register = cpu[register]
-
-print("max value:", max_register)
+print("max value:", cpu["__max"])
