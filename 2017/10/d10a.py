@@ -6,9 +6,6 @@ def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 debug = False
-cursor_idx = 0
-skip = 0
-
 if debug:
     lst = [i for i in range(0, 5)]
     lengths = [3, 4, 1, 5]
@@ -16,6 +13,8 @@ else:
     lst = [i for i in range(0, 256)]
     lengths = [int(l.strip()) for l in open('2017/10/input.txt', 'r').readline().split(",")]
 
+cursor_idx = 0
+skip = 0
 max_idx = len(lst)
 for length in lengths:
     if length > max_idx:
