@@ -10,24 +10,34 @@ else:
 adj = defaultdict(list)
 
 # build the adjacency list
+tovisit = []
+visited = []
+components = 0
+
 for line in lines:
     from_, to_ = line.split('<->')[0].strip(), line.split('<->')[1].replace(" ", "").split(',')
+
+    tovisit.append(from_)
 
     if from_ not in adj:
         for t in to_:
             adj[from_].append(t)
 
 # search from 0 through the adjacency list
-known = ['0']
-unknown = list(adj['0'])
+while len(tovisit) > 0:
+    components += 1
 
-while len(unknown) > 0:
-    u = unknown.pop()
-    if u in known:
-        continue
-    else:
-        known.append(u)
-        unknown += adj[u]
+    v = tovisit.pop(0)
+    visited.append(v)
+    neighbours = list(adj[v])
 
-print(known)
-print(len(known))
+    while len(neighbours) > 0:
+        u = neighbours.pop()
+        if u in visited:
+            continue
+        else:
+            visited.append(u)
+            tovisit.remove(u)
+            neighbours += adj[u]
+
+print("No. of components:", components)
