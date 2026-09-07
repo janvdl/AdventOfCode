@@ -2,19 +2,18 @@ import os
 from collections import defaultdict
 from knot_hash import knot_hash_bin
 
-debug = False
+debug = True
 if debug:
     key = open('2017/14/input_sample.txt', 'r').readline()
 else:
     key = open('2017/14/input.txt', 'r').readline()
 
-# count used squares by running over key-0, key-1, ..., key-127
-used_squares = 0
+# grid building starts here
+grid = [[] for j in range(0, 128)]
 for i in range(0, 128):
     curr_key = key + "-" + str(i)
     b = knot_hash_bin(curr_key) # returns binary string 10100000110000100000000101110000...
-    for u in b:
-        if u == '1': # count every 1 in returned binary string
-            used_squares += 1
+    grid[i] = ['#' if c == '1' else '.' for c in b]
 
-print(used_squares)
+for row in grid:
+    print(row)
