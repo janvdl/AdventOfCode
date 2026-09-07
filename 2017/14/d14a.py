@@ -13,8 +13,6 @@ used_squares = 0
 for i in range(0, 128):
     curr_key = key + "-" + str(i)
     b = knot_hash_bin(curr_key) # returns binary string 10100000110000100000000101110000...
-    for u in b:
-        if u == '1': # count every 1 in returned binary string
-            used_squares += 1
+    used_squares += sum([int(c) for c in b])
 
 print(used_squares)
