@@ -82,7 +82,7 @@ def parse(r, instr):
     elif comm == "snd":
         reg_snd(r, x)
     else:
-        r['halt'] == 1
+        r['halt'] = 1
         print("E-R-R-O-R")
     
 
