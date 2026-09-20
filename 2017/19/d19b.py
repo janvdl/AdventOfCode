@@ -30,6 +30,7 @@ def peek(grid, coord, direction, jump = 1):
 # init vars
 pos = (0, 0) # grid coords = (row, col)
 dir = moves['down'] # initial direction is down
+empty = ('', ' ')
 
 # populate grid
 for i, v in enumerate(lines):
@@ -51,25 +52,24 @@ while not halt:
         stringbuilder += curr_char
 
     next1 = peek(grid, pos, dir, 1)
-    next2 = peek(grid, pos, dir, 2)
 
-    if next1 not in ('', ' '):
+    if next1 not in empty:
         pos = move(pos, dir)
     else:
         if dir in (moves['up'], moves['down']):
             left = peek(grid, pos, moves['left'])
             right = peek(grid, pos, moves['right'])
-            if left in ('', ' ') and right in ('', ' '):
+            if left in empty and right in empty:
                 halt = True
 
-            dir = moves['left'] if left not in ('', ' ') else moves['right']
+            dir = moves['left'] if left not in empty else moves['right']
         elif dir in (moves['left'], moves['right']):
             up = peek(grid, pos, moves['up'])
             down = peek(grid, pos, moves['down'])
-            if up in ('', ' ') and down in ('', ' '):
+            if up in empty and down in empty:
                 halt = True
 
-            dir = moves['up'] if up not in ('', ' ') else moves['down']
+            dir = moves['up'] if up not in empty else moves['down']
         pos = move(pos, dir)
 
 print(steps)
