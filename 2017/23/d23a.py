@@ -1,0 +1,24 @@
+import os
+from collections import defaultdict
+import d23_helpers
+
+# init dictionary for registers
+register = defaultdict(int)
+
+# read input
+debug = False
+lines = None
+if debug:
+    lines = open('2017/23/input_sample.txt', 'r').readlines()
+else:
+    lines = open('2017/23/input.txt', 'r').readlines()
+
+register['line'] = 0 # initialise to line 0 of the program (i.e., what's contained in lines)
+register['maxlines'] = len(lines)
+register['halt'] = 0
+
+# program execution
+while register['halt'] == 0:
+    instr = lines[register['line']].strip()
+    print(f"{register['line']}: {instr}; mul = {register['mul_counter']}")
+    d23_helpers.parse(register, instr)
