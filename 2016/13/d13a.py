@@ -62,5 +62,5 @@ for i in range(len(points)):
             adj[p2].add(p1)
 
 # calculate least cost path by DFSing adjacency list
-bla = best_path(adj, start, goal, path={start})
-print(bla)
+best = best_path(adj, start, goal, path={start})
+print(best)
