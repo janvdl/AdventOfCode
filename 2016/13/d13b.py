@@ -84,4 +84,4 @@ for i in range(len(points)):
 
 # calculate number of points reachable within 50 steps
 reachable = points_within_50(adj, start) 
-print(len(reachable)) # need to add 1 for the starting location
+print(len(reachable))
