@@ -6,7 +6,7 @@ My non-AI solutions to [Advent of Code](https://adventofcode.com) problems, sort
 | Year | Days solved | Stars | Languages | Notes |
 |------|-------------|-------|-----------|-------|
 | 2015 | 1–11 | 22 | Python, Go, C# | Days 1–4 also done in Go, day 1 in C# |
-| 2016 | 1–13 | 26 | Python | In progress |
+| 2016 | 1–15 | 30 | Python | In progress |
 | 2017 | 1–20, 22–25 | 46 | Python | Day 21 and part 2 of day 23 unsolved |
 | 2018–2023 | – | – | – | Not started yet |
 | 2024 | 1–18 | 34 | Python | Part 2 of days 16 and 17 incomplete |
