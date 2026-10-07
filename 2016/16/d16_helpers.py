@@ -1,12 +1,10 @@
-def step(a: str) -> str:
+def step(a: list[int]) -> list[int]:
     b = a[::-1]
-    b = ''.join(['1' if c == '0' else '0' for c in b])
-    return (a + '0' + b)
+    b = [1 if x == 0 else 0 for x in b]
+    return (a + [0] + b)
 
-assert(step('1') == '100')
-assert(step('0') == '001')
-assert(step('11111') == '11111000000')
-assert(step('111100001010') == '1111000010100101011110000')
+assert(step([1]) == [1, 0, 0])
+assert(step([0]) == [0, 0, 1])
 
 def generate(input_, length):
     a = input_
@@ -19,15 +17,17 @@ def generate(input_, length):
 
     return a
 
-assert(generate('10000', 20) == '10000011110010000111')
+assert(generate([1, 0, 0, 0, 0], 20) == [1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1])
 
-def checksum(s: str) -> str:
-    if len(s) % 2 != 0:
-        return s
+def checksum(a: list[int]) -> str:
+    if len(a) % 2 != 0:
+        return ''.join([str(x) for x in a])
     else:
-        split = [(s[i:i+2]) for i in range(0, len(s), 2)]
-        s_new = ''.join(['1' if s_[0] == s_[1] else '0' for s_ in split])
-        return checksum(s_new)
+        a_new = []
+        for i in range(0, len(a), 2):
+            a1 = a.pop(0)
+            a2 = a.pop(0)
+            a_new.append(1 if a1 == a2 else 0)
+        return checksum(a_new)
 
-assert(checksum('110010110100') == '100')
-assert(checksum('10000011110010000111') == '01100')
+assert(checksum([1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0]) == '100')

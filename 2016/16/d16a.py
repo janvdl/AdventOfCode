@@ -11,7 +11,7 @@ else:
     lines = open('2016/16/input.txt', 'r').readlines()
     length = 272
 
-input_ = lines[0]
+input_ = [int(c) for c in lines[0]]
 a = d16_helpers.generate(input_, length)
 checksum = d16_helpers.checksum(a)
 print(f"Checksum: {checksum}")
