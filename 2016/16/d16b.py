@@ -10,7 +10,7 @@ if debug:
     length = 20
 else:
     lines = open('2016/16/input.txt', 'r').readlines()
-    length = 272
+    length = 35651584
 
 input_ = lines[0].strip()
 ba = bitarray(len(input_))

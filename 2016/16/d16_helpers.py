@@ -1,33 +1,36 @@
-def step(a: list[int]) -> list[int]:
-    b = a[::-1]
-    b = [1 if x == 0 else 0 for x in b]
-    return (a + [0] + b)
+from bitarray import bitarray
 
-assert(step([1]) == [1, 0, 0])
-assert(step([0]) == [0, 0, 1])
+def step(a: bitarray) -> bitarray:
+    b = ~a[::-1]
+    return (a + bitarray('0') + b)
 
-def generate(input_, length):
-    a = input_
+assert(step(bitarray('1')) == bitarray('100'))
+assert(step(bitarray('0')) == bitarray('001'))
+
+def generate(ba: bitarray, length: int) -> bitarray:
+    a = ba
 
     # keep expanding until we are at or over the length required
     while len(a) < length:
+        done_perc = int((len(a) / length) * 100)
+        print(f"Expansion: {done_perc}%")
         a = step(a)
 
     a = a[:length]
+    print("Done with expansion")
 
     return a
 
-assert(generate([1, 0, 0, 0, 0], 20) == [1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1])
+assert(generate(bitarray('10000'), 20) == bitarray('10000011110010000111'))
 
-def checksum(a: list[int]) -> str:
+def checksum(a: bitarray) -> bitarray:
+    print(f"Checksum in progress :: input length is {len(a)}")
     if len(a) % 2 != 0:
-        return ''.join([str(x) for x in a])
+        return a
     else:
-        a_new = []
+        a_new = bitarray(len(a) // 2)
         for i in range(0, len(a), 2):
-            a1 = a.pop(0)
-            a2 = a.pop(0)
-            a_new.append(1 if a1 == a2 else 0)
+            a_new[i // 2] = a[i] == a[i + 1]
         return checksum(a_new)
 
-assert(checksum([1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0]) == '100')
+assert(checksum(bitarray('110010110100')) == bitarray('100'))
